@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 import componentes
 import errores
@@ -9,7 +10,6 @@ import sys
 from sys import argv
 from sets import ImmutableSet
 
-
 class Analex:
     #############################################################################
     ##  Conjunto de palabras reservadas para comprobar si un identificador es PR
@@ -19,7 +19,7 @@ class Analex:
          "ENTONCES", "SINO", "MIENTRAS", "HACER", "LEE", "ESCRIBE", "Y", "O", "NO", "CIERTO", "FALSO"])
 
     listaNumeros = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    listaLetras = string.ascii_uppercase + string.ascii_lowercase;
+
     ############################################################################
     #
     #  Funcion: __init__
@@ -56,7 +56,6 @@ class Analex:
             # Una vez nos encontremos con un caracter "no en blanco" llamar otra vez a ANALIZA
 
             return self.Analiza()
-
 
         ## OPERADORES ARITMETICOS ##
         elif ch == "+":
@@ -104,39 +103,38 @@ class Analex:
             ch = self.flujo.siguiente()
 
         elif ch == "}":
-            print("ERROR: Comentario no abierto")  # tenemos un comentario no abierto
-            return self.Analiza()
+            return errores.ErrorLexico("Comentario no abierto")  # tenemos un comentario no abierto
 
         ## ASIGNACION ##
         elif ch == ":":
             # Comprobar con el siguiente caracter si es una definicion de la declaracion o el operador de asignacion
             ch = self.flujo.siguiente()
             if ch == "=":
-                return componentes.OpAsigna()
+                return componentes.OpAsigna(self.nlinea)
             else:
                 self.flujo.devuelve(ch)
-                return componentes.DosPtos()
+                return componentes.DosPtos(self.nlinea)
 
 
         ## OPERADORES Y CATEGORIAS LEXICAS QUE FALTAN ##
         # Completar los operadores y categorias lexicas que faltan
         elif ch == "(":
-            return componentes.ParentAP()
+            return componentes.ParentAp(self.nlinea)
 
         elif ch == ")":
-            return componentes.ParentCi()
+            return componentes.ParentCi(self.nlinea)
 
         elif ch == "[":
-            return componentes.CorAp()
+            return componentes.CorAp(self.nlinea)
 
         elif ch == "]":
-            return componentes.CorCi()
+            return componentes.CorCi(self.nlinea)
 
         elif ch == ";":
-            return componentes.PtoComa()
+            return componentes.PtoComa(self.nlinea)
 
         elif ch == ",":
-            return componentes.Coma()
+            return componentes.Coma(self.nlinea)
 
 
         ## CARACTERES ##
@@ -146,14 +144,15 @@ class Analex:
                 ident.append(ch)
                 ch = self.flujo.siguiente();
             self.flujo.devuelve(ch)
+
+            ## PALABRAS CLAVE ##
+            for x in self.PR:
+                if x == ''.join(ident):
+                    return componentes.PR(x, self.nlinea)
             return componentes.Identif(''.join(ident),self.nlinea)
-        # leer entrada hasta que no sea un caracter valido de un identificador
-        # devolver el ultimo caracter a la entrada
-        # Comprobar si es un identificador o PR y devolver el objeto correspondiente
 
 
         ## NUMEROS ##
-
         elif any(ch == x for x in self.listaNumeros):
             hayPunto = False
             numero = []
@@ -174,9 +173,9 @@ class Analex:
                         return componentes.Numero(''.join(numero),self.nlinea)
             self.flujo.devuelve(ch)
             if hayPunto:
-                return componentes.Numero(''.join(numero),self.nlinea)
+                return componentes.Numero(''.join(numero),"real", self.nlinea)
             else:
-                return componentes.Numero(''.join(numero),self.nlinea)
+                return componentes.Numero(''.join(numero),"entero", self.nlinea)
 
 
 
@@ -198,7 +197,10 @@ class Analex:
             return self.Analiza()
 
         elif ch == ".":
-            return componentes.Punto("Punto",self.nlinea)
+            return componentes.Punto(self.nlinea)
+
+        elif True:
+            return errores.ErrorLexico("Caracter no permitido.")
 
 ############################################################################
 #
@@ -221,6 +223,6 @@ if __name__ == "__main__":
             print(c)
             c = analex.Analiza()
         i = i + 1
-    except errores.Error, err:
+    except errores.Error as err:
         sys.stderr.write("%s\n" % err)
         analex.muestraError(sys.stderr)

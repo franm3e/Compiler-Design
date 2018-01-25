@@ -1,0 +1,5 @@
+PROGRAMA program1;
+VAR x1, x1 : ENTERO ;
+INICIO
+FIN.
+{Archivo de comprobación del funcionamiento del Analizador Sintáctico}

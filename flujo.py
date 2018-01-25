@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# coding=utf-8
 
 #########################################################################################
 ##
@@ -14,9 +14,9 @@ class Flujo:
     self.pos= -1
     self.fic=f
 
-  #Devuelve un caracter de la cadenma
+  # Devuelve un caracter de la cadenma
   def siguiente(self):
-    return self.fic.read(1)
+   return self.fic.read(1)
     # if self.po < len(self.cad)-1:
     #   self.pos+= 1
     #   return self.cad[self.pos]

@@ -1,2 +1,26 @@
-a
-A 12
+id1
+id2
+ID1
+ID2
+=
+<>
+<
+<=
+>=
+>
++
+-
+*
+/
+967:=967.27
+:
+,
+;
+[
+]
+(
+)
+}
+!
+PROGRAMA
+{Archivo de comprobación del funcionamiento del Analizador Léxico}

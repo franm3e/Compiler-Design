@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-# This Python file uses the following encoding: utf-8
+# coding=utf-8
 
 import string
 import sys
 import os
+
 ######################################################################################
 ##
 ##  Define varias clases que definen cada uno de los diferentes componentes lexicos
@@ -32,70 +33,59 @@ class Componente:
 
 #clases para los simbolos de puntuacion y operadores
 
-class OpAsigna (Componente):
-  def __init__(self, v, nl):
+class OpAsigna(Componente):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "OpAsigna"
     self.linea = nl
 
 class LlaveAp(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "LlaveAp"
     self.linea = nl
 
-class LlaveCi (Componente):
-  def __init__(self, v, nl):
+class LlaveCi(Componente):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "LlaveCi"
     self.linea = nl
 
 class ParentAp(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "ParentAp"
     self.linea = nl
 
 class ParentCi(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "ParentCi"
     self.linea = nl
 
 class CorAp(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "CorAp"
     self.linea = nl
 
 class CorCi(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "CorCi"
     self.linea = nl
 
 class Punto(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "Punto"
     self.linea = nl
 
 class Coma(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "Coma"
     self.linea = nl
 
 class PtoComa(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "PtoComa"
     self.linea = nl
 
 class DosPtos(Componente):
-  def __init__(self, v, nl):
+  def __init__(self, nl):
     Componente.__init__(self)
-    self.valor = "DosPtos"
     self.linea = nl
 
 # Clase que define la categoria OpAdd 
@@ -125,7 +115,7 @@ class OpMult(Componente):
 #Puede dividirse en 2 para representar los enteros y los reales de forma independiente
 #Si se opta por una sola categoria debe alamcenarse el tipo de los datos ademas del valor
 class Numero (Componente):
-  def __init__(self, v,nl):
+  def __init__(self, v, tipo, nl):
     Componente.__init__(self)
     self.valor= v
     self.linea=nl
@@ -134,7 +124,7 @@ class Numero (Componente):
 
 #clase para representar los identificadores.
 class Identif (Componente):
-  def __init__(self, v,nl):
+  def __init__(self, v, nl=0):
     Componente.__init__(self)
     self.valor= v
     self.linea=nl

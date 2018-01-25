@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# coding=utf-8
 
 class Error(Exception):
   def __init__(self, mensaje):
@@ -10,11 +10,11 @@ class Error(Exception):
 
 class ErrorLexico(Error):
   def __init__(self, mensaje):
-    self.mensaje= "Error lexico: %s" % mensaje
+    self.mensaje = "Error lexico: %s" % mensaje
 
 class ErrorSintactico(Error):
   def __init__(self, mensaje):
-    self.mensaje= "Error sintactico: %s" % mensaje
+    self.mensaje = "Error sintactico: %s" % mensaje
 
 class ErrorSemantico(Error):
   def __init__(self, mensaje):
